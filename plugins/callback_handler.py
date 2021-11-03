@@ -3,9 +3,7 @@
 
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from helper import mediagroup_gen, split_image
-from plugins.command_handler import (
-    about,
-)
+
 from helper.printer import Printer
 from webshotbot import WebshotBot
 from pyrogram import filters
