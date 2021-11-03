@@ -7,6 +7,44 @@ from pyrogram import filters
 from config import Config
 import os
 
+START_TEXT = """
+<i>👋 Hᴇʏ,</i>{message.from_user.first_name}\n
+<i>I'm Telegram Web Screenshot Bot</i>\n
+<i>Cʟɪᴄᴋ ᴏɴ Hᴇʟᴘ ᴛᴏ ɢᴇᴛ ᴍᴏʀᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</i>\n
+<i><b>☘️ Bᴏᴛ Mᴀɪɴᴛᴀɪɴᴇᴅ Bʏ :</b>@FZBOTS</i>"""
+
+HELP_TEXT = """
+<i>- Send the link of the website you want to render, choose the desired setting, and click start render.</i>\n
+<i>- This bot uses an actual browser under the hood to render websites.</i>"""
+
+ABOUT_TEXT = """
+<b>⚜ Mʏ ɴᴀᴍᴇ : Web Screenshot Bot</b>\n
+<b>🔸Vᴇʀꜱɪᴏɴ : <a href='https://telegram.me/FZBOTS'>3.0.1</a></b>\n
+<b>🔸GitHub : <a href='https://GitHub.com/Monster-ZeroX'>Fᴏʟʟᴏᴡ</a></b>\n
+<b>🔹Dᴇᴠᴇʟᴏᴘᴇʀ : <a href='https://telegram.me/Monster_ZeroX'>☠️👽Moͦns͛ᴛⷮeͤrͬ Zeͤrͬoͦ👽☠️</a></b>\n
+<b>🔸Lᴀꜱᴛ ᴜᴘᴅᴀᴛᴇᴅ : <a href='https://telegram.me/FZBOTS'>[ 11-ᴊᴜʟʏ-21 ] 04:35 PM</a></b>"""
+
+START_BUTTONS = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton('Hᴇʟᴘ', callback_data='help'),
+        InlineKeyboardButton('Aʙᴏᴜᴛ', callback_data='about'),
+        InlineKeyboardButton('Cʟᴏsᴇ', callback_data='close')
+        ]]
+    )
+HELP_BUTTONS = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton('Hᴏᴍᴇ', callback_data='home'),
+        InlineKeyboardButton('Aʙᴏᴜᴛ', callback_data='about'),
+        InlineKeyboardButton('Cʟᴏsᴇ', callback_data='close')
+        ]]
+    )
+ABOUT_BUTTONS = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton('Hᴏᴍᴇ', callback_data='home'),
+        InlineKeyboardButton('Hᴇʟᴘ', callback_data='help'),
+        InlineKeyboardButton('Cʟᴏsᴇ', callback_data='close')
+        ]]
+    )
 
 @WebshotBot.on_message(
     filters.regex(pattern="http[s]*://.+") & filters.private & ~filters.edited
@@ -98,40 +136,19 @@ async def checker(client: WebshotBot, message: Message):
 @WebshotBot.on_message(filters.command(["start"]))
 async def start(_, message: Message) -> None:
     await message.reply_text(
-        f"<b>Hi {message.from_user.first_name} 👋\n"
-        "I can render website of a given link to either PDF or PNG/JPEG</b>",
-        quote=True,
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("❓ About", callback_data="about_cb")]]
-        ),
-    )
+            text=START_TEXT.format(update.from_user.mention),
+            disable_web_page_preview=True,
+            reply_markup=START_BUTTONS
+        )
 
 
-@WebshotBot.on_message(filters.command(["about", "feedback"]))
+@WebshotBot.on_message(filters.command(["about"]))
 async def feedback(_, message: Message) -> None:
     await message.reply_text(
-        text="This project is open ❤️ source",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "👨🏻‍🦯 Source",
-                        url="https://github.com/alenpaul2001/Web-Screenshot-Bot",
-                    ),
-                    InlineKeyboardButton(
-                        "❓ Bug Report",
-                        url="https://github.com/alenpaul2001/Web-Screenshot-Bot/issues",
-                    ),
-                ],
-                [
-                    InlineKeyboardButton(
-                        "🌃 Profile Icon Credit",
-                        url="https://www.goodfon.com/wallpaper/art-vector-background-illustration-minimalism-angga-tanta-12.html",
-                    )
-                ],
-            ]
-        ),
-    )
+            text=ABOUT_TEXT,
+            disable_web_page_preview=True,
+            reply_markup=ABOUT_BUTTONS
+        )
 
 
 @WebshotBot.on_message(
@@ -140,26 +157,9 @@ async def feedback(_, message: Message) -> None:
 async def help_handler(_, message: Message) -> None:
     if Config.SUPPORT_GROUP_LINK is not None:
         await message.reply_text(
-            "__Frequently Asked Questions__** : -\n\n"
-            "A. How to use the bot to render a website?\n\n"
-            "Ans:** Send the link of the website you want to render, "
-            "choose the desired setting, and click `start render`.\n\n"
-            "**B. How does this bot work?\n\n Ans:** This bot uses"
-            " an actual browser under the hood to render websites.\n\n"
-            "**C. How to report a bug or request a new feature?\n\n"
-            "Ans:** For feature requests or bug reports, you can open an "
-            "[issue](https://github.com/alenpaul2001/Web-Screenshot-Bot) in Github"
-            " or send the inquiry message in the support group mentioned below.",
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="Support group", url=Config.SUPPORT_GROUP_LINK
-                        )
-                    ]
-                ]
-            ),
+            text=HELP_TEXT,
             disable_web_page_preview=True,
+            reply_markup=HELP_BUTTONS
         )
 
 
