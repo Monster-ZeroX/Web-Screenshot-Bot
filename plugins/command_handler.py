@@ -133,7 +133,7 @@ async def checker(client: WebshotBot, message: Message):
     )
 
 
-@WebshotBot.on_callback_query()
+@WebshotBot.on_message(filters.command(["start"]))
 async def feedback(_, message: Message) -> None:
     if update.data == "home":
         await update.message.edit_text(
