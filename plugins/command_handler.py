@@ -135,6 +135,7 @@ async def checker(client: WebshotBot, message: Message):
 
 @WebshotBot.on_message(filters.command(["start"]))
 async def start(_, message: Message) -> None:
+    if update.data == "home":
     await message.reply_text(
             text=START_TEXT,
             disable_web_page_preview=True,
@@ -144,6 +145,7 @@ async def start(_, message: Message) -> None:
 
 @WebshotBot.on_message(filters.command(["about"]))
 async def feedback(_, message: Message) -> None:
+    if update.data == "help":
     await message.reply_text(
             text=ABOUT_TEXT,
             disable_web_page_preview=True,
@@ -152,10 +154,10 @@ async def feedback(_, message: Message) -> None:
 
 
 @WebshotBot.on_message(
-    filters.command(["support", "feedback", "help"]) & filters.private
+    filters.command(["about", "feedback", "help"]) & filters.private
 )
 async def help_handler(_, message: Message) -> None:
-    if Config.SUPPORT_GROUP_LINK is not None:
+    if update.data == "about":
         await message.reply_text(
             text=HELP_TEXT,
             disable_web_page_preview=True,
