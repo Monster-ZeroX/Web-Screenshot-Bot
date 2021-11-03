@@ -157,7 +157,7 @@ async def feedback(_, message: Message) -> None:
     filters.command(["about", "feedback", "help"]) & filters.private
 )
 async def help_handler(_, message: Message) -> None:
-    if update.data == "about":
+    if Config.SUPPORT_GROUP_LINK is not None:
         await message.reply_text(
             text=HELP_TEXT,
             disable_web_page_preview=True,
