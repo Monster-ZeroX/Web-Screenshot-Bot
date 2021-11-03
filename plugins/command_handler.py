@@ -26,23 +26,23 @@ ABOUT_TEXT = """
 
 START_BUTTONS = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton('Channel', url='https://t.me/FZBOTS'),
-        InlineKeyboardButton('Group', url='htps://t.me/FZBOTSSUPPORT'),
-        InlineKeyboardButton('Status', url='https://t.me/FZBOTS/61')
+        InlineKeyboardButton('Channel', url="t.me/FZBOTS"),
+        InlineKeyboardButton('Group', url="t.me/FZBOTSSUPPORT"),
+        InlineKeyboardButton('Status', url="t.me/FZBOTS/61")
         ]]
     )
 HELP_BUTTONS = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton('Channel', url='https://t.me/FZBOTS'),
-        InlineKeyboardButton('Group', url='htps://t.me/FZBOTSSUPPORT'),
-        InlineKeyboardButton('Status', url='https://t.me/FZBOTS/61')
+        InlineKeyboardButton('Channel', url="t.me/FZBOTS"),
+        InlineKeyboardButton('Group', url="t.me/FZBOTSSUPPORT"),
+        InlineKeyboardButton('Status', url="t.me/FZBOTS/61")
         ]]
     )
 ABOUT_BUTTONS = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton('Channel', url='https://t.me/FZBOTS'),
-        InlineKeyboardButton('Group', url='htps://t.me/FZBOTSSUPPORT'),
-        InlineKeyboardButton('Status', url='https://t.me/FZBOTS/61')
+        InlineKeyboardButton('Channel', url="t.me/FZBOTS"),
+        InlineKeyboardButton('Group', url="t.me/FZBOTSSUPPORT"),
+        InlineKeyboardButton('Status', url="t.me/FZBOTS/61")
         ]]
     )
 
