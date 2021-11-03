@@ -133,37 +133,28 @@ async def checker(client: WebshotBot, message: Message):
     )
 
 
-@WebshotBot.on_message(filters.command(["start"]))
-async def start(_, message: Message) -> None:
+@WebshotBot.on_callback_query()
+async def cb_data(bot, update):
     if update.data == "home":
-    await message.reply_text(
-            text=START_TEXT,
+        await update.message.edit_text(
+            text=START_TEXT.format(update.from_user.mention),
             disable_web_page_preview=True,
             reply_markup=START_BUTTONS
         )
-
-
-@WebshotBot.on_message(filters.command(["about"]))
-async def feedback(_, message: Message) -> None:
-    if update.data == "help":
-    await message.reply_text(
-            text=ABOUT_TEXT,
-            disable_web_page_preview=True,
-            reply_markup=ABOUT_BUTTONS
-        )
-
-
-@WebshotBot.on_message(
-    filters.command(["about", "feedback", "help"]) & filters.private
-)
-async def help_handler(_, message: Message) -> None:
-    if Config.SUPPORT_GROUP_LINK is not None:
-        await message.reply_text(
+    elif update.data == "help":
+        await update.message.edit_text(
             text=HELP_TEXT,
             disable_web_page_preview=True,
             reply_markup=HELP_BUTTONS
         )
-
+    elif update.data == "about":
+        await update.message.edit_text(
+            text=ABOUT_TEXT,
+            disable_web_page_preview=True,
+            reply_markup=ABOUT_BUTTONS
+        )
+    else:
+        await update.message.delete()
 
 @WebshotBot.on_message(filters.command(["debug", "log"]) & filters.private)
 async def send_log(_, message: Message) -> None:
