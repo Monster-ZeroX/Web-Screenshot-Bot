@@ -10,7 +10,7 @@ import os
 START_TEXT = """
 <i>👋 Hᴇʏ,</i>{message.from_user.first_name}\n
 <i>I'm Telegram Web Screenshot Bot</i>\n
-<i>Cʟɪᴄᴋ ᴏɴ Hᴇʟᴘ ᴛᴏ ɢᴇᴛ ᴍᴏʀᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</i>\n
+<i>Cʟɪᴄᴋ ᴏɴ /help ᴛᴏ ɢᴇᴛ ᴍᴏʀᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</i>\n
 <i><b>☘️ Bᴏᴛ Mᴀɪɴᴛᴀɪɴᴇᴅ Bʏ :</b>@FZBOTS</i>"""
 
 HELP_TEXT = """
@@ -26,23 +26,23 @@ ABOUT_TEXT = """
 
 START_BUTTONS = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton('Hᴇʟᴘ', callback_data='help'),
-        InlineKeyboardButton('Aʙᴏᴜᴛ', callback_data='about'),
-        InlineKeyboardButton('Cʟᴏsᴇ', callback_data='close')
+        InlineKeyboardButton('Channel', url='https://t.me/FZBOTS'),
+        InlineKeyboardButton('Group', url='htps://t.me/FZBOTSSUPPORT'),
+        InlineKeyboardButton('Status', url='https://t.me/FZBOTS/61')
         ]]
     )
 HELP_BUTTONS = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton('Hᴏᴍᴇ', callback_data='home'),
-        InlineKeyboardButton('Aʙᴏᴜᴛ', callback_data='about'),
-        InlineKeyboardButton('Cʟᴏsᴇ', callback_data='close')
+        InlineKeyboardButton('Channel', url='https://t.me/FZBOTS'),
+        InlineKeyboardButton('Group', url='htps://t.me/FZBOTSSUPPORT'),
+        InlineKeyboardButton('Status', url='https://t.me/FZBOTS/61')
         ]]
     )
 ABOUT_BUTTONS = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton('Hᴏᴍᴇ', callback_data='home'),
-        InlineKeyboardButton('Hᴇʟᴘ', callback_data='help'),
-        InlineKeyboardButton('Cʟᴏsᴇ', callback_data='close')
+        InlineKeyboardButton('Channel', url='https://t.me/FZBOTS'),
+        InlineKeyboardButton('Group', url='htps://t.me/FZBOTSSUPPORT'),
+        InlineKeyboardButton('Status', url='https://t.me/FZBOTS/61')
         ]]
     )
 
@@ -134,27 +134,35 @@ async def checker(client: WebshotBot, message: Message):
 
 
 @WebshotBot.on_message(filters.command(["start"]))
-async def feedback(_, message: Message) -> None:
-    if message.data == "home":
-        await update.message.edit_text(
-            text=START_TEXT.format(update.from_user.mention),
+async def start(_, message: Message) -> None:
+    if update.data == "home":
+    await message.reply_text(
+            text=START_TEXT,
             disable_web_page_preview=True,
             reply_markup=START_BUTTONS
         )
-    elif message.data == "help":
-        await update.message.edit_text(
-            text=HELP_TEXT,
-            disable_web_page_preview=True,
-            reply_markup=HELP_BUTTONS
-        )
-    elif message.data == "about":
-        await update.message.edit_text(
+
+
+@WebshotBot.on_message(filters.command(["about"]))
+async def feedback(_, message: Message) -> None:
+    if update.data == "help":
+    await message.reply_text(
             text=ABOUT_TEXT,
             disable_web_page_preview=True,
             reply_markup=ABOUT_BUTTONS
         )
-    else:
-        await update.message.delete()
+
+
+@WebshotBot.on_message(
+    filters.command(["about", "feedback", "help"]) & filters.private
+)
+async def help_handler(_, message: Message) -> None:
+    if Config.SUPPORT_GROUP_LINK is not None:
+        await message.reply_text(
+            text=HELP_TEXT,
+            disable_web_page_preview=True,
+            reply_markup=HELP_BUTTONS
+        )
 
 @WebshotBot.on_message(filters.command(["debug", "log"]) & filters.private)
 async def send_log(_, message: Message) -> None:
