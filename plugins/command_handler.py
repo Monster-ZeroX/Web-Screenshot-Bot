@@ -135,8 +135,7 @@ async def checker(client: WebshotBot, message: Message):
 
 @WebshotBot.on_message(filters.command(["start"]))
 async def start(_, message: Message) -> None:
-    if update.data == "home":
-    await message.reply_text(
+       await message.reply_text(
             text=START_TEXT,
             disable_web_page_preview=True,
             reply_markup=START_BUTTONS
@@ -145,7 +144,6 @@ async def start(_, message: Message) -> None:
 
 @WebshotBot.on_message(filters.command(["about"]))
 async def feedback(_, message: Message) -> None:
-    if update.data == "help":
     await message.reply_text(
             text=ABOUT_TEXT,
             disable_web_page_preview=True,
