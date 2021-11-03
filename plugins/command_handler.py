@@ -136,7 +136,7 @@ async def checker(client: WebshotBot, message: Message):
 @WebshotBot.on_message(filters.command(["start"]))
 async def start(_, message: Message) -> None:
     await message.reply_text(
-            text=START_TEXT.format(update.from_user.mention),
+            text=START_TEXT,
             disable_web_page_preview=True,
             reply_markup=START_BUTTONS
         )
